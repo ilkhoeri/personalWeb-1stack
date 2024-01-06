@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?      @unique
+  emailVerified   DateTime?
+  password        String
+  image           String?
+  birth           DateTime     @default(now())
+  phone           String       @default("+62000-0000-0000")
+  bio             String       @default("")
+  resume          String       @default("")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  role                   UserRole     @default(ADMIN)
+  isTwoFactorEnabled     Boolean      @default(false)
+  twoFactorConfirmation  TwoFactorConfirmation?
+
+  accounts        Account[]
+  address         Address[]    @relation("UserToAddress")
+  socmed          Socmed[]     @relation("UserToSocMed")
+  params          Params[]     @relation("UserToParams")
+  billboards      Billboard[]  @relation("UserToBillboard")
+  categories      Category[]   @relation("UserToCategory")
+  agendas         Agenda[]     @relation("UserToAgenda")
+  blogs           Blog[]       @relation("UserToBlog")
+  match           Match[]      @relation("UserToMatch")
+  equal           Equal[]      @relation("UserToEqual")
+}
+
+model Account {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String    @map("_userId") @db.ObjectId
+  user               User      @relation( fields: [userId], references: [id], onDelete: Cascade)
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?   @db.String
+  access_token       String?   @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?   @db.String
+  session_state      String?
+
+  @@unique([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  email              String
+  token              String    @unique
+  expires            DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  email              String
+  token              String    @unique
+  expires            DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  email             String
+  token             String     @unique
+  expires           DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id               String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String      @map("_userId") @db.ObjectId
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
+
+model Address {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToAddress", fields: [userId], references: [id])
+  country         String
+  province        String
+  zipcode         String
+  district        String
+  subdistrict     String
+  village         String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Socmed {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToSocMed", fields: [userId], references: [id])
+  siteName        String
+  siteUrl         String
+  imageUrl        String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Params {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToParams", fields: [userId], references: [id])
+  slug            String
+  heading         String
+  markHead        String
+  sections        Section[]
+  notes           String
+  isNew           Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Section {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  paramsId        String       @map("_paramsId") @db.ObjectId
+  params          Params       @relation(fields: [paramsId], references: [id], onDelete: Cascade)
+  node            String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([paramsId])
+}
+
+model Billboard {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToBillboard", fields: [userId], references: [id])
+  label           String
+  imageUrl        String
+  categories      Category[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Category {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToCategory", fields: [userId], references: [id])
+  billboardId     String       @map("_billboardId") @db.ObjectId
+  billboard       Billboard    @relation(fields: [billboardId], references: [id])
+  name            String
+  imageUrl        String
+  agendas         Agenda[]     @relation("CategoryToAgenda")
+  blogs           Blog[]       @relation("CategoryToBlog")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([billboardId])
+}
+
+model Agenda {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToAgenda", fields: [userId], references: [id])
+  name            String
+  description     String
+  ticketPrice     Int
+  quantity        Int          // Properti quantity, represents the number of ticket
+  isFeatured      Boolean      @default(false)
+  isArchived      Boolean      @default(false)
+  categoryId      String       @map("_categoryId") @db.ObjectId
+  category        Category?    @relation("CategoryToAgenda", fields: [categoryId], references: [id])
+  matchId         String       @map("_matchId") @db.ObjectId
+  match           Match?       @relation(fields: [matchId], references: [id])
+  equalId         String       @map("_equalId") @db.ObjectId
+  equal           Equal?       @relation(fields: [equalId], references: [id])
+  imageUrl        String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([matchId])
+  @@index([equalId])
+}
+
+model Blog {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToBlog", fields: [userId], references: [id])
+  name            String
+  description     String
+  categoryId      String       @map("_categoryId") @db.ObjectId
+  category        Category?    @relation("CategoryToBlog", fields: [categoryId], references: [id])
+  matchId         String       @map("_matchId") @db.ObjectId
+  match           Match?       @relation(fields: [matchId], references: [id])
+  equalId         String       @map("_equalId") @db.ObjectId
+  equal           Equal?       @relation(fields: [equalId], references: [id])
+  images          Image[]      // Relation to Image model
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([matchId])
+  @@index([equalId])
+}
+
+model Image {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  blogId          String      @map("_agendaId") @db.ObjectId
+  blog            Blog        @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  url             String      // URL of the image
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([blogId])
+}
+
+
+model Match {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToMatch", fields: [userId], references: [id])
+  name            String
+  value           String
+  imageUrl        String
+  agendas         Agenda[]     // Relation to Agenda model
+  blogs           Blog[]       // Relation to Blog model
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Equal {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @map("_userId") @db.ObjectId
+  user            User         @relation("UserToEqual", fields: [userId], references: [id])
+  name            String
+  value           String
+  imageUrl        String
+  agendas         Agenda[]     // Relation to Agenda model
+  blogs           Blog[]       // Relation to Blog model
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+

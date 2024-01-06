@@ -1,0 +1,10 @@
+.attentions {
+  animation: attention 0.25s linear forwards var(--delay, 10s);
+}
+
+@keyframes attention {
+  to {
+    transform: scale3d(0, 0, 0);
+    display: none;
+  }
+}

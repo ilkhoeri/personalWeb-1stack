@@ -1,0 +1,62 @@
+import Container from "@/components/ui/container";
+
+import HeaderRoot from "@/components/assets/header/header-root";
+import { Button } from "@/components/ui/button";
+import { CircleLight, LineLight } from "@/components/assets/decoration/intro-light";
+import { Anchor } from "@/components/ui/anchor";
+import Heading from "@/components/ui/heading";
+
+export default function Home() {
+  return (
+    <>
+      <HeaderRoot />
+      <Container el={"main"} className="pt-6 px-4 md:px-8">
+        <figure className="relative h-full w-full text-center flex flex-col items-center md:pt-6 px-4 md:px-16">
+          <CircleLight className="left-[-3px]" />
+          <LineLight line="horizontal" className="-top-0.5" />
+          <LineLight line="horizontal" delay={0.5} className="-bottom-8" />
+          <LineLight line="vertical" className="left-8" />
+          <LineLight line="vertical" className="right-8" delay={0.4} />
+
+          <Heading el="h1" size={"h3"}>
+            The Joke Tax Chronicles
+          </Heading>
+
+          <p className="leading-7 [&:not(:first-child)]:mt-6">
+            Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging on his throne.
+            One day, his advisors came to him with a problem: the kingdom was running out of money.
+          </p>
+          <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+            The King&apos;s Plan
+          </h2>
+          <p className="leading-7 [&:not(:first-child)]:mt-6 pb-6">
+            The king thought long and hard, and finally came up with{" "}
+            <a href="#" className="font-medium text-primary underline underline-offset-4">
+              a brilliant plan
+            </a>
+            : he would tax the jokes in the kingdom.
+          </p>
+
+          <div className="relative p-9 gap-4 inline-flex items-center justify-center">
+            <Anchor href={"#"} className="h-[44px] font-bold">
+              Get Started
+            </Anchor>
+            <Anchor
+              href={"#"}
+              className="bg-background text-color outline outline-1 outline-muted-foreground hover:bg-muted-foreground/25 h-[44px] font-bold"
+            >
+              Videos
+            </Anchor>
+
+            <LineLight line="horizontal" offset={40} className="top-0" />
+            <LineLight line="horizontal" className="bottom-0 [--line-offset:40px]" />
+            <LineLight line="vertical" offset={20} className="left-0" />
+            <LineLight line="vertical" className="right-0 [--line-offset:20px]" />
+          </div>
+        </figure>
+      </Container>
+    </>
+  );
+}
+
+
