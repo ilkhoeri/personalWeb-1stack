@@ -26,7 +26,26 @@ import { ElaboratedUser } from "@/types";
 import { Session } from "next-auth/types";
 import { twMerge } from "tailwind-merge";
 
-const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
+type SettingsUserFormProps = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: Date | undefined;
+    password: string;
+    image: string | undefined;
+    birth: Date;
+    phone: string;
+    bio: string;
+    resume: string;
+    createdAt: Date;
+    updatedAt: Date;
+    role: UserRole;
+    isTwoFactorEnabled: boolean;
+  } & ElaboratedUser;
+};
+
+const SettingsUserForm: React.FC<SettingsUserFormProps> = ({ user }) => {
   const router = useRouter();
   // const user = useCurrentUser();
 
@@ -40,7 +59,7 @@ const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(SettingsSchema),
-    defaultValues: user?.user || {
+    defaultValues: user || {
       name: "",
       email: "",
       image: "",
@@ -120,7 +139,7 @@ const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
                 </FormItem>
               )}
             />
-            {user?.user.isOAuth === false && (
+            {user?.isOAuth === false && (
               <>
                 <FormField
                   control={form.control}
@@ -184,7 +203,7 @@ const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
                 </FormItem>
               )}
             />
-            {user?.user.isOAuth === false && (
+            {user?.isOAuth === false && (
               <FormField
                 control={form.control}
                 name="isTwoFactorEnabled"
