@@ -50,7 +50,7 @@ const SignUpForm: React.FC = () => {
         .then((data) => {
           if (data?.error) {
             setError(data.error);
-            toast.error(error || "Sign Up Failed!");
+            toast.error(error as string);
           }
 
           if (data?.success) {

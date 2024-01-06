@@ -22,11 +22,11 @@ import ImageUploadProfile from "@/components/ui/uploads/image-upload-profile";
 import ImageUploadProfileModal from "@/components/ui/uploads/image-upload-profile-modal";
 
 import { useRouter } from "next/navigation";
-import { ElaboratedUser, Session } from "@/types";
-// import { Session } from "next-auth/types";
+import { ElaboratedUser } from "@/types";
+import { Session } from "next-auth/types";
 import { twMerge } from "tailwind-merge";
 
-const SettingsUserForm: React.FC<{ user: any }> = ({ user }) => {
+const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
   const router = useRouter();
   // const user = useCurrentUser();
 
@@ -40,14 +40,14 @@ const SettingsUserForm: React.FC<{ user: any }> = ({ user }) => {
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(SettingsSchema),
-    defaultValues: user?.user || {
-      name: "",
-      email: "",
-      image: "",
+    defaultValues: {
+      name: user?.user.name || undefined,
+      email: user?.user.email || "",
+      image: user?.user.image || "",
       password: "",
       newPassword: "",
-      role: "USER",
-      isTwoFactorEnabled: false,
+      role: user?.user.role || "USER",
+      isTwoFactorEnabled: user?.user.isTwoFactorEnabled || false,
     },
   });
 

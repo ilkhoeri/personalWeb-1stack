@@ -17,7 +17,7 @@ export const signup = async (values: z.infer<typeof SignUpSchema>) => {
   }
 
   const { email, password, name } = validatedFields.data;
-  const hashedPassword = await bcrypt.hash(password, 86);
+  const hashedPassword = await bcrypt.hash(password, 12);
 
   const existingUser = await getUserByEmail(email);
 
