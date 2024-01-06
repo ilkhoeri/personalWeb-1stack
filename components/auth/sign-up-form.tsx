@@ -3,7 +3,6 @@
 import * as React from "react";
 import * as z from "zod";
 
-import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 import { toast } from "react-hot-toast";
-import ImageUpload from "@/components/ui/uploads/image-upload";
 import { InputPassword } from "@/components/ui/input-password";
 import { RequirementPsw } from "@/components/auth/requirements";
 import { SignUpSchema } from "@/schemas";
@@ -38,7 +36,6 @@ const SignUpForm: React.FC = () => {
     defaultValues: {
       name: "",
       email: "",
-      image: "",
       password: "",
       confirmPassword: "",
     },
@@ -74,27 +71,6 @@ const SignUpForm: React.FC = () => {
       <form onSubmit={signupForm.handleSubmit(onSubmit)} className="space-y-8 w-full max-w-3xl grid items-center">
         <Attention tendence="success" message={success} />
         <Attention tendence="error" message={error} />
-
-        <FormField
-          control={signupForm.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <ImageUpload
-                  maxFiles={1}
-                  sources={["local"]}
-                  value={field.value ?? ""}
-                  // value={field.value ? [field.value] : []}
-                  disabled={isPending}
-                  onChange={(url) => field.onChange(url)}
-                  onRemove={() => field.onChange("")}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={signupForm.control}
