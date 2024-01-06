@@ -84,11 +84,11 @@ const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
               alt="images"
               aria-disabled={loading}
               style={{ objectFit: "cover" }}
-              className={twMerge("bg-theme", classNames?.image)}
+              className={twMerge("bg-background", classNames?.image)}
             />
           ) : (
             childrens?.imageIcon || (
-              <LuUserCircle strokeWidth={1} className={twMerge("_imageIcon_ h-full w-full", classNames?.imageIcon)} />
+              <LuUserCircle strokeWidth={1} className={twMerge("_imageIcon_ h-full w-full text-color", classNames?.imageIcon)} />
             )
           )}
         </div>

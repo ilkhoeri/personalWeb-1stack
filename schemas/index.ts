@@ -28,8 +28,8 @@ export const SettingsSchema = z
     email: z.optional(z.string().email()),
     isTwoFactorEnabled: z.optional(z.boolean()),
     role: z.enum([UserRole.ADMIN, UserRole.USER]),
-    password: z.optional(z.string().min(8)),
-    newPassword: z.optional(z.string().min(8)),
+    password: z.optional(passwordSchema(passwordMessage)),
+    newPassword: z.optional(passwordSchema(passwordMessage)),
   })
   .refine(
     (data) => {

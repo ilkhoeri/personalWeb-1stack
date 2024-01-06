@@ -6,34 +6,16 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { twMerge } from "tailwind-merge";
+import type { ExtendedCldUploadWidget } from "@/types";
 
 // cloudinary upload preset - beta
 export const Cloudinary_UploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-interface ImageUploadProps {
+interface ImageUploadProps extends ExtendedCldUploadWidget {
   disabled?: boolean;
   onChange: (value: string) => void;
   onRemove: (value: string) => void;
   value: string | string[];
-
-  maxFiles?: number;
-  maxFileSize?: number;
-  sources?:
-    | (
-        | "camera"
-        | "dropbox"
-        | "facebook"
-        | "gettyimages"
-        | "google_drive"
-        | "image_search"
-        | "instagram"
-        | "istock"
-        | "local"
-        | "shutterstock"
-        | "unsplash"
-        | "url"
-      )[]
-    | undefined;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({

@@ -83,7 +83,6 @@ const SettingsUserForm: React.FC<{ user: Session | null }> = ({ user }) => {
               name="image"
               render={({ field }) => (
                 <FormItem aria-disabled={isPending}>
-                  <FormLabel>Avatar</FormLabel>
                   <FormControl aria-disabled={isPending}>
                     <ImageUploadProfile
                       name="image"

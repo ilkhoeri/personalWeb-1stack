@@ -23,7 +23,7 @@ const Attention = React.forwardRef<HTMLDialogElement, React.DialogHTMLAttributes
     }
 
     const opened = message ? true : false;
-    
+
     return (
       <dialog id="attention" open={opened} className={cN} data-messages={tendence} {...props} ref={ref}>
         {tendence === "success" && <HiShieldCheck className="h-7 w-7" />}

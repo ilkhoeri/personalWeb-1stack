@@ -38,9 +38,9 @@ const ImageUploadProfileModal: React.FC<ImageUploadProfileModalProps> = ({ isOpe
         name="image"
         render={({ field }) => (
           <FormItem>
-            <FormLabel></FormLabel>
             <FormControl>
               <ImageUploadProfile
+                sources={["local"]}
                 button="upload"
                 name="image"
                 loading={loading}

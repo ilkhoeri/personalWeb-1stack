@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
-
-import db from "@/lib/db";
 import { auth } from "@/auth/auth";
+import db from "@/lib/db";
 import Container from "@/components/ui/container";
 import HeadNav from "@/components/assets/headnav/headnav";
 
@@ -33,7 +32,7 @@ export default async function DashboardLayout({
     <>
       <HeadNav />
       {/* <Aside /> */}
-      <Container el={"main"} className="w-full flex items-center justify-center [&_form]:[transition:all_0.5s_ease]">
+      <Container el={"main"} className="py-10 w-full flex items-center justify-center [&_form]:[transition:all_0.5s_ease]">
         {children}
       </Container>
       {/* <Footer initialData={store} /> */}

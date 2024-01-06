@@ -7,15 +7,13 @@ import ImagePlaceholder from "./image-placeholder";
 import type { buttonImagePlaceholderType } from "./image-placeholder";
 
 import { Cloudinary_UploadPreset } from "./image-upload";
+import { ExtendedCldUploadWidget } from "@/types";
 
-interface ImageUploadProfileProps extends buttonImagePlaceholderType {
+interface ImageUploadProfileProps extends buttonImagePlaceholderType, ExtendedCldUploadWidget {
   onChange: (value: string) => void;
   openModal?: () => void;
   value: string;
   name: string;
-
-  maxFiles?: number;
-  maxFileSize?: number;
 }
 
 const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
@@ -28,6 +26,7 @@ const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
   loading,
   maxFiles = 1,
   maxFileSize = 2097152,
+  sources,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -48,7 +47,7 @@ const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
         options={{
           maxFiles,
           maxFileSize,
-          // sources: ['local'],
+          sources,
         }}
       >
         {({ open }) => {
@@ -57,7 +56,7 @@ const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
               button={button}
               onRemove={onRemove}
               name={name}
-              loading={!isMounted}
+              loading={loading || !isMounted}
               value={value}
               onClick={() => (isMounted && openModal ? openModal() : open())}
             />
