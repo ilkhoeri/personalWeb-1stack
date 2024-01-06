@@ -22,30 +22,11 @@ import ImageUploadProfile from "@/components/ui/uploads/image-upload-profile";
 import ImageUploadProfileModal from "@/components/ui/uploads/image-upload-profile-modal";
 
 import { useRouter } from "next/navigation";
-import { ElaboratedUser } from "@/types";
-import { Session } from "next-auth/types";
+import { ElaboratedUser, Session } from "@/types";
+// import { Session } from "next-auth/types";
 import { twMerge } from "tailwind-merge";
 
-type SettingsUserFormProps = {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-    emailVerified: Date | undefined;
-    password: string;
-    image: string | undefined;
-    birth: Date;
-    phone: string;
-    bio: string;
-    resume: string;
-    createdAt: Date;
-    updatedAt: Date;
-    role: UserRole;
-    isTwoFactorEnabled: boolean;
-  } & ElaboratedUser;
-};
-
-const SettingsUserForm: React.FC<SettingsUserFormProps> = ({ user }) => {
+const SettingsUserForm: React.FC<{ user: any }> = ({ user }) => {
   const router = useRouter();
   // const user = useCurrentUser();
 
@@ -59,7 +40,7 @@ const SettingsUserForm: React.FC<SettingsUserFormProps> = ({ user }) => {
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(SettingsSchema),
-    defaultValues: user || {
+    defaultValues: user?.user || {
       name: "",
       email: "",
       image: "",
@@ -139,7 +120,7 @@ const SettingsUserForm: React.FC<SettingsUserFormProps> = ({ user }) => {
                 </FormItem>
               )}
             />
-            {user?.isOAuth === false && (
+            {user?.user.isOAuth === false && (
               <>
                 <FormField
                   control={form.control}
@@ -203,7 +184,7 @@ const SettingsUserForm: React.FC<SettingsUserFormProps> = ({ user }) => {
                 </FormItem>
               )}
             />
-            {user?.isOAuth === false && (
+            {user?.user.isOAuth === false && (
               <FormField
                 control={form.control}
                 name="isTwoFactorEnabled"
