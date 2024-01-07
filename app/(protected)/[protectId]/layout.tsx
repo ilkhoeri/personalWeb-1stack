@@ -5,7 +5,6 @@ import HeadNav from "@/components/assets/headnav/headnav";
 import { currentRole } from "@/lib/current";
 import { UserRole } from "@prisma/client";
 import Header from "@/components/ui/header";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SidebarNavClient } from "@/components/assets/sidenav/sidebar-nav-client";
 
 export default async function ProtectedLayout({
@@ -31,10 +30,10 @@ export default async function ProtectedLayout({
       <HeadNav />
       <Container
         el={"main"}
-        className="w-full flex items-center justify-center space-y-6 p-4 md:p-8 md:pt-6 pb-16 [&_form]:[transition:all_0.5s_ease]"
+        className="w-full flex flex-nowrap flex-col justify-center space-y-6 p-4 md:p-8 md:pt-6 pb-16 [&_form]:[transition:all_0.5s_ease]"
       >
         <Header title="Settings" description="Manage your account settings and set info public preferences." />
-        <Separator />
+        <hr />
 
         <div className="w-full flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <SidebarNavClient />
