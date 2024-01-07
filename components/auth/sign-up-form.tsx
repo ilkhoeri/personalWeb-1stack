@@ -11,16 +11,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-import { toast } from "react-hot-toast";
+import { useToast } from "@/components/assets/toast/use-toast";
 import { InputPassword } from "@/components/ui/input-password";
 import { RequirementPsw } from "@/components/auth/requirements";
-import { SignUpSchema } from "@/schemas";
+import { SignUpSchema } from "@/schemas/auth";
 import { signup } from "@/auth/sign-up";
 import { Attention } from "../ui/attention";
 import { twMerge } from "tailwind-merge";
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const [popoverOpened, setPopoverOpened] = React.useState(false);
   const [value, setValue] = React.useState("");
@@ -44,20 +45,21 @@ const SignUpForm: React.FC = () => {
   const onSubmit = (values: SignUpFormValues) => {
     setError("");
     setSuccess("");
+    toast({ title: "Wait a moment...", icon: "loading" });
 
     startTransition(() => {
       signup(values)
         .then((data) => {
           if (data?.error) {
             setError(data.error);
-            toast.error(error as string);
+            toast({ title: error as string, icon: "error" });
           }
 
           if (data?.success) {
             signupForm.reset();
             router.refresh();
             setSuccess(data.success);
-            toast.success(success as string);
+            toast({ title: success as string, icon: "success" });
           }
         })
         .catch(() => {

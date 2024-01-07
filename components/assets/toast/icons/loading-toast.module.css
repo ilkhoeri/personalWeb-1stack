@@ -1,0 +1,29 @@
+.load {
+  width: calc(var(--size-success-icon, 30px) - 4px);
+  height: calc(var(--size-success-icon, 30px) - 4px);
+  box-sizing: border-box;
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 999px;
+  border-color: #e0e0e0;
+  border-right-color: #616161;
+  -webkit-animation: animate-load 1s linear infinite;
+  animation: animate-load 1s linear infinite;
+}
+
+@keyframes animate-load {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes animate-load {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

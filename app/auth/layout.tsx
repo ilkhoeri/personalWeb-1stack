@@ -24,10 +24,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Container
       el={"main"}
       aria-disabled={!isMounted}
-      className="py-6 px-4 w-full h-full min-h-screen flex items-center justify-center"
+      className="w-full h-full min-h-screen flex items-center justify-center"
     >
-      <div className="overflow-hidden w-full h-full min-h-screen rounded-[0.5rem] border bg-background shadow-md md:shadow-xl">
-        <div className="w-full lg:container relative flex flex-col items-center md:grid md:grid-cols-2 h-full min-h-[inherit] justify-center md:max-w-none md:px-0">
+      <div className="overflow-hidden w-full h-full p-5 absolute top-0 bottom-0 left-0 right-0">
+        <div className="w-full lg:container relative flex flex-col items-center md:grid md:grid-cols-2 h-full min-h-[inherit] justify-center md:max-w-none md:px-0 rounded-[0.5rem] border bg-background shadow-md md:shadow-xl">
           <Link
             className="w-[86px] inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 absolute right-2 top-2 md:right-5 md:top-5"
             href={path("/sign-in") ? "/auth/sign-up" : "/auth/sign-in"}

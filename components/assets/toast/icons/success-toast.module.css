@@ -1,0 +1,68 @@
+.svg {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  z-index: 1;
+
+  border-radius: 999px;
+  background: #61d345;
+  stroke: #ffffff;
+  width: var(--size-success-icon, 30px);
+  height: var(--size-success-icon, 30px);
+
+  -webkit-animation: svg-transform 0.65s linear forwards 0s;
+  animation: svg-transform 0.65s linear forwards 0s;
+}
+
+.svg path {
+  -webkit-animation: transform 0.65s linear forwards 0s;
+  animation: transform 0.65s linear forwards 0s;
+}
+
+@keyframes svg-transform {
+  0% {
+    stroke-width: 8;
+  }
+  100% {
+    stroke-width: 6;
+  }
+}
+@-webkit-keyframes svg-transform {
+  0% {
+    stroke-width: 8;
+  }
+  100% {
+    stroke-width: 6;
+  }
+}
+
+@keyframes transform {
+  0% {
+    stroke-dashoffset: 124.6;
+    stroke-dasharray: 0 162.6 133 29.6;
+    transition: all 0.4s ease 0s;
+  }
+  100% {
+    stroke-dashoffset: 162.6;
+    stroke-dasharray: 0 162.6 28 134.6;
+    transition: all 0.4s ease 0.2s;
+  }
+}
+@-webkit-keyframes transform {
+  0% {
+    stroke-dashoffset: 124.6;
+    stroke-dasharray: 0 162.6 133 29.6;
+    transition: all 0.4s ease 0s;
+  }
+  100% {
+    stroke-dashoffset: 162.6;
+    stroke-dasharray: 0 162.6 28 134.6;
+    transition: all 0.4s ease 0.2s;
+  }
+}

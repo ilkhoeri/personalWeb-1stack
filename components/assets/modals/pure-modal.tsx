@@ -102,7 +102,7 @@ const PureModal: React.FC<PureModalProps & HeadModals> = ({
 
           <div
             data-pure-modal="content"
-            className="p-6 pt-4 w-full flex flex-col flex-nowrap gap-4 overflow-x-hidden overflow-y-auto [--scroll-size:0px]"
+            className="p-6 pt-4 w-full flex flex-col flex-nowrap gap-4 overflow-x-hidden overflow-y-auto [--scroll-sz:0px]"
           >
             {children}
           </div>

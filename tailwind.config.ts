@@ -70,6 +70,7 @@ const config = {
         background: "hsl(var(--background))",
         color: "hsl(var(--color))",
         foreground: "hsl(var(--foreground))",
+        "dark-blue": "hsl(var(--dark-blue))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -113,10 +114,24 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "bounce-in": {
+          "0%": { opacity: "0", scale: "1.3" },
+          "50%": { opacity: "0.8", scale: "0.7" },
+          "80%": { opacity: "9", scale: "0.8" },
+          "100%": { opacity: "1", scale: "1" },
+        },
+        "bounce-out": {
+          "0%": { opacity: "0", scale: "0.3" },
+          "50%": { opacity: "0.8", scale: "1.2" },
+          "80%": { opacity: "9", scale: "0.8" },
+          "100%": { opacity: "1", scale: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "bounce-in": "bounce-in 0.5s linear forwards 0.3s",
+        "bounce-out": "bounce-out 0.5s linear forwards 0.3s",
       },
       fontFamily: {
         inter: ["var(--ff-inter)"],

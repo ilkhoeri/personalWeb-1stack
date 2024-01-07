@@ -13,10 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-import { toast } from "react-hot-toast";
+import { useToast } from "@/components/assets/toast/use-toast";
 import { InputPassword } from "@/components/ui/input-password";
 import { RequirementPsw } from "@/components/auth/requirements";
-import { SignInSchema } from "@/schemas";
+import { SignInSchema } from "@/schemas/auth";
 import { signin } from "@/auth/sign-in";
 import { Attention } from "../ui/attention";
 import { twMerge } from "tailwind-merge";
@@ -29,6 +29,7 @@ import { twMerge } from "tailwind-merge";
 const SignInForm: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { toast } = useToast();
 
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
@@ -59,6 +60,7 @@ const SignInForm: React.FC = () => {
 
     startTransition(() => {
       setLoading(true);
+      toast({ title: "Wait a moment...", icon: "loading" });
       signin(values, callbackUrl)
         .then((data) => {
           setLoading(false);
@@ -66,13 +68,13 @@ const SignInForm: React.FC = () => {
           if (data?.error) {
             // signinForm.reset();
             setError(data.error);
-            toast.error(error || urlError);
+            toast({ title: error || undefined, description: urlError || undefined, icon: "error" });
           }
 
           if (data?.success) {
             signinForm.reset();
             setSuccess(data.success);
-            toast.success("Sign in success!");
+            toast({ title: "Sign in success!", icon: "success" });
           }
 
           if (data?.twoFactor) {

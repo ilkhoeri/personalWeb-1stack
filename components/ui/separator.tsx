@@ -23,3 +23,18 @@ const Separator = React.forwardRef<
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export default Separator;
+
+export interface SparatorProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLHRElement>, HTMLHRElement> {
+  orientation?: "horizontal" | "vertical";
+}
+export const HR = React.forwardRef<HTMLHRElement, SparatorProps>(
+  ({ className, orientation = "horizontal", ...props }, ref) => {
+    const cN = twMerge(
+      "shrink-0 bg-border",
+      orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+      className,
+    );
+    return <hr className={cN} ref={ref} {...props} />;
+  },
+);
+HR.displayName = "HR";

@@ -28,12 +28,12 @@ interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement>, Variant
 }
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ el, className, variant, size, ...props }, ref) => {
-    const propertys: { [key: string]: any } = {};
-    propertys["data-heading"] = el as string;
-    propertys.className = twMerge(headingVariants({ variant, size: size ?? el }), className);
+    const attr: { [key: string]: any } = {};
+    attr["data-heading"] = el as string;
+    attr.className = twMerge(headingVariants({ variant, size: size ?? el }), className);
 
     let Component: React.ElementType = el;
-    return <Component {...propertys} {...props} ref={ref} />;
+    return <Component {...attr} {...props} ref={ref} />;
   },
 );
 Heading.displayName = "Heading";

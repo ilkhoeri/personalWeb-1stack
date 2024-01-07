@@ -23,7 +23,7 @@ const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
   name,
   button,
   onRemove,
-  loading,
+  disabled,
   maxFiles = 1,
   maxFileSize = 2097152,
   sources,
@@ -56,7 +56,8 @@ const ImageUploadProfile: React.FC<ImageUploadProfileProps> = ({
               button={button}
               onRemove={onRemove}
               name={name}
-              loading={loading || !isMounted}
+              disabled={disabled}
+              loading={!isMounted}
               value={value}
               onClick={() => (isMounted && openModal ? openModal() : open())}
             />

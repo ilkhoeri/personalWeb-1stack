@@ -4,7 +4,7 @@ import * as z from "zod";
 import bcrypt from "bcryptjs";
 
 import { db } from "@/lib/db";
-import { SignUpSchema } from "@/schemas";
+import { SignUpSchema } from "@/schemas/auth";
 import { getUserByEmail } from "@/auth/user";
 import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
@@ -17,7 +17,7 @@ export const signup = async (values: z.infer<typeof SignUpSchema>) => {
   }
 
   const { email, password, name } = validatedFields.data;
-  const hashedPassword = await bcrypt.hash(password, 12);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const existingUser = await getUserByEmail(email);
 

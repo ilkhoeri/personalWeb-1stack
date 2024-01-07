@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/provider/theme";
-import { Toaster as ReactHotToaster } from "react-hot-toast";
+import { Toaster } from "@/components/assets/toast/toaster";
 import { SessionProvider } from "next-auth/react";
 
 import { auth } from "@/auth/auth";
 import { inter } from "@/components/provider/font";
 
 import "./globals.css";
+import { NavigationProgress } from "@/components/assets/navigation/progress";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: {
@@ -46,30 +48,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </head>
         <body className={inter.variable}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Suspense fallback={null}>
+              <NavigationProgress />
+            </Suspense>
             {children}
-
-            <ReactHotToaster
-              position="bottom-right"
-              reverseOrder={false}
-              gutter={8}
-              containerClassName=""
-              containerStyle={{ bottom: "32px", right: "40px" }}
-              toastOptions={{
-                className: "[&_.go3958317564]:inline",
-                duration: 5000,
-                style: {
-                  background: "hsl(212deg 100% 48%)",
-                  color: "white",
-                  minWidth: "250px",
-                },
-                success: {
-                  duration: 3000,
-                },
-                custom: {
-                  style: { backgroundColor: "red" },
-                },
-              }}
-            />
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>

@@ -5,7 +5,7 @@ import { AuthError } from "next-auth";
 
 import { db } from "@/lib/db";
 import { signIn } from "@/auth/auth";
-import { SignInSchema } from "@/schemas";
+import { SignInSchema } from "@/schemas/auth";
 import { getUserByEmail } from "@/auth/user";
 import { getTwoFactorTokenByEmail } from "@/auth/two-factor-token";
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";

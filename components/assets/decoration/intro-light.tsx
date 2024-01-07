@@ -47,14 +47,14 @@ const LineLight: React.FC<LineLightProps> = ({ side, line, delay = 0.15, offset,
   const l = side === "left" && "left-0";
   const r = side === "right" && "right-0";
 
-  const propertys: { [key: string]: any } = {};
-  propertys["aria-hidden"] = "true";
-  propertys["data-line"] = line as string;
-  propertys["data-side"] = side as string;
-  propertys.style = { ...style, ...variables() };
-  propertys.className = twMerge(ll.line, cl, vc, hz, l, r, cN);
+  const attr: { [key: string]: any } = {};
+  attr["aria-hidden"] = "true";
+  attr["data-line"] = line as string;
+  attr["data-side"] = side as string;
+  attr.style = { ...style, ...variables() };
+  attr.className = twMerge(ll.line, cl, vc, hz, l, r, cN);
 
-  return <div {...propertys} {...other} />;
+  return <div {...attr} {...other} />;
 };
 
 export { CircleLight, LineLight };

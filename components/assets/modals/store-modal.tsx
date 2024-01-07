@@ -4,7 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { useToast } from "@/components/assets/toast/use-toast";
 import { useState } from "react";
 // import { useRouter } from 'next/navigation';
 
@@ -13,10 +13,11 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Button } from "@/components/ui/button";
-import { SettingsUserSchema } from "@/schemas";
+import { SettingsUserSchema } from "@/schemas/auth";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
+  const { toast } = useToast();
   // const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ export const StoreModal = () => {
       const response = await axios.post("/api/stores", values);
       window.location.assign(`/${response.data.id}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast({ title: "Uh Oh! Something went wrong!", icon: "error" });
     } finally {
       setLoading(false);
     }
