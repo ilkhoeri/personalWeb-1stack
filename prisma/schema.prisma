@@ -17,7 +17,7 @@ model User {
   name            String
   email           String       @unique
   emailVerified   DateTime?
-  password        String
+  password        String?      // opsional for auth provider
   image           String?
   birth           DateTime     @default(now())
   phone           String       @default("+62000-0000-0000")
